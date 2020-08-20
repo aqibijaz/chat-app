@@ -9,9 +9,9 @@
   },
   "scripts": {
     "start": "node server/index.js",
-    "backend": "nodemon server/index.js",
-    "frontend": "npm run start --prefix client",
-    "dev": "concurrently \"npm run backend\" \"npm run start --prefix client\""
+    "bk": "nodemon server/index.js",
+    "fe": "npm run start --prefix client",
+    "dev": "concurrently \"npm run bk\" \"npm run start --prefix client\""
   },
   "author": "John ahn",
   "license": "ISC",
@@ -28,6 +28,7 @@
     "mongoose": "^5.4.20",
     "react-redux": "^5.0.7",
     "saslprep": "^1.0.3",
+    "socket.io": "^2.3.0",
     "supports-color": "^7.1.0"
   },
   "devDependencies": {
