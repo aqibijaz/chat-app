@@ -45,6 +45,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use("/api/users", require("./routes/users"));
+app.use("/api/chat", require("./routes/chat"));
 
 io.on("connection", (socket) => {
   socket.on("Input Chat Message", (msg) => {
@@ -58,9 +59,15 @@ io.on("connection", (socket) => {
         chat.save((err, doc) =>{
           if(err) return res.json({success: false, err})
 
-          // Cha
+          Chat.find({"_id": doc._id})
+          .populate("sender")
+          .exec((err, doc) => {
+            return io.emit("Output Chat Message", doc)
+          })
         })
-      } catch (error) {}
+      } catch (error) {
+        console.error(error);
+      }
     });
   });
 });
@@ -83,6 +90,6 @@ if (process.env.NODE_ENV === "production") {
 
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => {
+server.listen(port,() => {
   console.log(`Server Listening on ${port}`);
 });
